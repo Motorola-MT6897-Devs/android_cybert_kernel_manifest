@@ -40,7 +40,7 @@
   <project path="system/tools/mkbootimg" name="platform/system/tools/mkbootimg" clone-depth="1" groups="build" />
 
   <!-- Kernel Sources (Motorola) -->
-  <project path="kernel-mtk" name="kernel-mtk" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
+  <project path="kernel-6.1" name="kernel-mtk" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
   <project path="build/kernel" name="kernel-build-kernel" remote="moto" revision="android-15-release-vvta35" clone-depth="1" groups="kernel" />
   <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" remote="moto" revision="android-15-release-vvta35" clone-depth="1" groups="kernel" />
   <project path="kernel_device_modules-6.1" name="kernel-kernel_device_modules-6.1" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
