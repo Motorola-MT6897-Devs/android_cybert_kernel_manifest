@@ -38,7 +38,7 @@
 
   <!-- Build Systems -->
   <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" clone-depth="1" groups="build" />
-  <project path="build/kernel" name="kernel/build" clone-depth="1" groups="kernel" />
+  <project path="build/kernel" name="kernel/build" revision="main-kernel-2025" clone-depth="1" groups="kernel" />
   <project path="system/tools/mkbootimg" name="platform/system/tools/mkbootimg" clone-depth="1" groups="build" />
 
   <!-- Kernel Sources (Motorola) -->
