@@ -24,6 +24,7 @@
   <project path="external/bazelbuild-rules_java" name="platform/external/bazelbuild-rules_java" clone-depth="1" groups="external" />
   <project path="external/protobuf" name="platform/external/protobuf" clone-depth="1" groups="external" />
   <project path="external/bazel-contrib-bazel_features" name="platform/external/bazel-contrib-bazel_features" revision="main-kernel-2025" clone-depth="1" groups="external" />
+  <project path="external/zlib" name="platform/external/zlib" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_rust" name="platform/external/bazelbuild-rules_rust" clone-depth="1" groups="external" />
   <project path="external/python/absl-py" name="platform/external/python/absl-py" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_shell" name="platform/external/bazelbuild-rules_shell" revision="main-kernel-2025" clone-depth="1" groups="external" />
