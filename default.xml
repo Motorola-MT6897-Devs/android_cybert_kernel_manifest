@@ -16,6 +16,7 @@
   <project path="external/libcap-ng" name="platform/external/libcap-ng" clone-depth="1" groups="external" />
   <project path="external/bazel-skylib" name="platform/external/bazel-skylib" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_cc" name="platform/external/bazelbuild-rules_cc" clone-depth="1" groups="external" />
+  <project path="external/bazelbuild-platforms" name="platform/external/bazelbuild-platforms" revision="main-kernel-2025" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_license" name="platform/external/bazelbuild-rules_license" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_pkg" name="platform/external/bazelbuild-rules_pkg" clone-depth="1" revision="main-kernel" groups="external" />
   <project path="external/bazelbuild-rules_python" name="platform/external/bazelbuild-rules_python" clone-depth="1" groups="external" />
