@@ -26,7 +26,7 @@
   <project path="external/bazel-contrib-bazel_features" name="platform/external/bazel-contrib-bazel_features" revision="main-kernel-2025" clone-depth="1" groups="external" />
   <project path="external/zlib" name="platform/external/zlib" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_rust" name="platform/external/bazelbuild-rules_rust" clone-depth="1" groups="external" />
-  <project path="external/bazelbuild-rules-kotlin" name="platform/external/bazelbuild-rules-kotlin" revision="master" clone-depth="1" groups="external" />
+  <project path="external/bazelbuild-rules-kotlin" name="platform/tools/external/bazelbuild-rules-kotlin" revision="master" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-bazel-central-registry" name="platform/external/bazelbuild-bazel-central-registry" revision="main-kernel-2025" clone-depth="1" groups="external" />
   <project path="external/python/absl-py" name="platform/external/python/absl-py" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_shell" name="platform/external/bazelbuild-rules_shell" revision="main-kernel-2025" clone-depth="1" groups="external" />
