@@ -7,7 +7,7 @@
   <remote name="moto"
           fetch="git@github.com:MotorolaMobilityLLC/" />
           
-  <default revision="android14-release"
+  <default revision="android15-release"
            remote="aosp"
            sync-j="4" />
            
@@ -33,7 +33,7 @@
   
   <!-- NDK Prebuilts (From Toolchain) -->
   <project path="prebuilts/ndk/r26" name="toolchain/prebuilts/ndk/r26" remote="aosp" revision="main-kernel-2025" clone-depth="1" groups="prebuilts" />
-  <project path="prebuilts/ndk/r23" name="toolchain/prebuilts/ndk/r23" remote="aosp" revision="refs/tags/android-14.0.0_r0.139" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/ndk/r23" name="toolchain/prebuilts/ndk/r23" remote="aosp" revision="refs/tags/android-15.0.0_r0.99" clone-depth="1" groups="prebuilts" />
 
   <!-- Build Systems -->
   <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" clone-depth="1" groups="build" />
