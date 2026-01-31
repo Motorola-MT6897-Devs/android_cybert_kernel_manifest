@@ -62,4 +62,10 @@
   <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/bt-linux_v2" name="vendor-mediatek-kernel_modules-connectivity-bt-linux_v2" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
   <project path="kernel_platform/vendor/mediatek/kernel_modules/mtkcam" name="vendor-mediatek-kernel_modules-mtkcam" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
 
+  <!-- Manifest Repo & Build Script -->
+  <remote name="moto_devs" fetch="https://github.com/Motorola-MT6897-Devs/" />
+  <project path="kernel_platform/build/manifest" name="android_cybert_kernel_manifest" remote="moto_devs" revision="lineage-23.0">
+    <copyfile src="build.sh" dest="build.sh" />
+  </project>
+
 </manifest>
