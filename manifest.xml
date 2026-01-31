@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="aosp"
+          fetch="https://android.googlesource.com/"
+          review="https://android-review.googlesource.com/" />
+  
+  <remote name="moto"
+          fetch="git@github.com:MotorolaMobilityLLC/" />
+          
+  <default revision="android15-release"
+           remote="aosp"
+           sync-j="4"
+           clone-depth="1" />
+           
+  <!-- AOSP External Projects -->
+  <project path="kernel_platform/external/libcap" name="platform/external/libcap" groups="external" />
+  <project path="kernel_platform/external/libcap-ng" name="platform/external/libcap-ng" groups="external" />
+  <project path="kernel_platform/external/bazel-skylib" name="platform/external/bazel-skylib" groups="external" />
+  <project path="kernel_platform/external/bazelbuild-rules_cc" name="platform/external/bazelbuild-rules_cc" groups="external" />
+  <project path="kernel_platform/external/bazelbuild-rules_license" name="platform/external/bazelbuild-rules_license" groups="external" />
+  <project path="kernel_platform/external/bazelbuild-rules_pkg" name="platform/external/bazelbuild-rules_pkg" revision="main-kernel" groups="external" />
+  <project path="kernel_platform/external/bazelbuild-rules_python" name="platform/external/bazelbuild-rules_python" groups="external" />
+  <project path="kernel_platform/external/bazelbuild-rules_rust" name="platform/external/bazelbuild-rules_rust" groups="external" />
+  <project path="kernel_platform/external/python/absl-py" name="platform/external/python/absl-py" groups="external" />
+  
+  <!-- Prebuilts -->
+  <project path="kernel_platform/prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" groups="prebuilts" />
+  <project path="kernel_platform/prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" groups="prebuilts" />
+  <project path="kernel_platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" groups="prebuilts" />
+  <project path="kernel_platform/prebuilts/build-tools" name="platform/prebuilts/build-tools" groups="prebuilts" />
+  <project path="kernel_platform/prebuilts/jdk/jdk11" name="platform/prebuilts/jdk/jdk11" revision="build-tools-release" groups="prebuilts" />
+  <project path="kernel_platform/prebuilts/rust" name="platform/prebuilts/rust" groups="prebuilts" />
+  <project path="kernel_platform/prebuilts/clang-tools" name="platform/prebuilts/clang-tools" groups="prebuilts" />
+  
+  <!-- NDK Prebuilts (From Toolchain) -->
+  <project path="kernel_platform/prebuilts/ndk/r26" name="toolchain/prebuilts/ndk/r26" revision="main-kernel-2025" remote="aosp" groups="prebuilts" />
+  <project path="kernel_platform/prebuilts/ndk/r23" name="toolchain/prebuilts/ndk/r23" revision="main-kernel-2025" remote="aosp" groups="prebuilts" />
+
+  <!-- Build Systems -->
+  <project path="kernel_platform/build/bazel_common_rules" name="platform/build/bazel_common_rules" groups="build" />
+  <project path="kernel_platform/system/tools/mkbootimg" name="platform/system/tools/mkbootimg" groups="build" />
+
+  <!-- Kernel Sources (Motorola) -->
+  <project path="kernel_platform/kernel-mtk" name="kernel-mtk" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="kernel" />
+  <project path="kernel_platform/build/kernel" name="kernel-build-kernel" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="kernel" />
+  <project path="kernel_platform/build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="kernel" />
+  <project path="kernel_platform/kernel_device_modules-6.1" name="kernel-kernel_device_modules-6.1" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="kernel" />
+  <project path="kernel_platform/prebuilts/kernel-build-tools" name="kernel-prebuilts-kernel-build-tools" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="prebuilts" />
+
+  <!-- Vendor Modules (Motorola) -->
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/wlan-core-gen4m" name="vendor-mediatek-kernel_modules-connectivity-wlan-core-gen4m" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/bt-mt66xx" name="vendor-mediatek-kernel_modules-connectivity-bt-mt66xx" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/bt-mt76xx-sdio" name="vendor-mediatek-kernel_modules-connectivity-bt-mt76xx-sdio" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/common" name="vendor-mediatek-kernel_modules-connectivity-common" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/connfem" name="vendor-mediatek-kernel_modules-connectivity-connfem" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/conninfra" name="vendor-mediatek-kernel_modules-connectivity-conninfra" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/fmradio" name="vendor-mediatek-kernel_modules-connectivity-fmradio" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/gps" name="vendor-mediatek-kernel_modules-connectivity-gps" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/wlan-adaptor" name="vendor-mediatek-kernel_modules-connectivity-wlan-adaptor" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/gpu" name="vendor-mediatek-kernel_modules-gpu" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/met_drv_v3" name="vendor-mediatek-kernel_modules-met_drv_v3" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/connectivity/bt-linux_v2" name="vendor-mediatek-kernel_modules-connectivity-bt-linux_v2" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+  <project path="kernel_platform/vendor/mediatek/kernel_modules/mtkcam" name="vendor-mediatek-kernel_modules-mtkcam" remote="moto" revision="MMI-W1VV36H.7-21-5" groups="vendor" />
+
+</manifest>

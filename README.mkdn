@@ -1,0 +1,14 @@
+Motorola Kernel Build
+=====================
+
+Getting started
+---------------
+
+To initialize your local repository, use a command like this:
+```
+repo init -u https://github.com/Motorola-MT6897-Devs/android_cybert_kernel_manifest.git -b lineage-23.0 --git-lfs
+```
+Then to sync up:
+```
+repo sync
+```
