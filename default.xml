@@ -21,6 +21,7 @@
   <project path="external/bazelbuild-rules_python" name="platform/external/bazelbuild-rules_python" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_rust" name="platform/external/bazelbuild-rules_rust" clone-depth="1" groups="external" />
   <project path="external/python/absl-py" name="platform/external/python/absl-py" clone-depth="1" groups="external" />
+  <project path="external/bazelbuild-rules_shell" name="platform/external/bazelbuild-rules_shell" clone-depth="1" groups="external" />
   
   <!-- Prebuilts -->
   <project path="prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" clone-depth="1" groups="prebuilts" />
