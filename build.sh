@@ -1,4 +1,4 @@
-KERNEL_ROOT_DIR=$PWD/kernel_platform
+KERNEL_ROOT_DIR=$PWD
 TARGET_PRODUCT=cybert
 KERNEL_DEFCONFIG="mgk_64_k61_defconfig"
 KERNEL_BUILD_VARIANT=user
@@ -8,8 +8,6 @@ LINUX_KERNEL_VERSION="kernel-6.1"
 KERNEL_DEFCONFIG_OVERLAYS="mgk_64_k61_defconfig"
 KERNEL_BAZEL_BUILD_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ
 KERNEL_BAZEL_DIST_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ/dist
-
-cd kernel_platform
 
 # Link WORKSPACE if missing
 if [ ! -f "WORKSPACE" ]; then
