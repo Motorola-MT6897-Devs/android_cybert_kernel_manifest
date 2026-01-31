@@ -7,7 +7,7 @@
   <remote name="moto"
           fetch="git@github.com:MotorolaMobilityLLC/" />
           
-  <default revision="android15-release"
+  <default revision="android14-release"
            remote="aosp"
            sync-j="4" />
            
@@ -33,7 +33,7 @@
   
   <!-- NDK Prebuilts (From Toolchain) -->
   <project path="prebuilts/ndk/r26" name="toolchain/prebuilts/ndk/r26" remote="aosp" revision="main-kernel-2025" clone-depth="1" groups="prebuilts" />
-  <project path="prebuilts/ndk/r23" name="toolchain/prebuilts/ndk/r23" remote="aosp" revision="refs/tags/android-15.0.0_r0.2" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/ndk/r23" name="toolchain/prebuilts/ndk/r23" remote="aosp" revision="refs/tags/android-14.0.0_r0.139" clone-depth="1" groups="prebuilts" />
 
   <!-- Build Systems -->
   <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" clone-depth="1" groups="build" />
@@ -41,10 +41,10 @@
 
   <!-- Kernel Sources (Motorola) -->
   <project path="kernel-6.1" name="kernel-mtk" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
-  <project path="build/kernel" name="kernel-build-kernel" remote="moto" revision="android-15-release-vvta35" clone-depth="1" groups="kernel" />
+  <project path="build/kernel" name="kernel-build-kernel" remote="moto" revision="refs/tags/MMI-V2VV35.58-78-5" clone-depth="1" groups="kernel" />
   <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" remote="moto" revision="refs/tags/MMI-V2VV35.58-78-5" clone-depth="1" groups="kernel" />
   <project path="kernel_device_modules-6.1" name="kernel-kernel_device_modules-6.1" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
-  <project path="prebuilts/kernel-build-tools" name="kernel-prebuilts-kernel-build-tools" remote="moto" revision="android-15-release-vvta35" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/kernel-build-tools" name="kernel-prebuilts-kernel-build-tools" remote="moto" revision="refs/tags/MMI-V2VV35.58-78-5" clone-depth="1" groups="prebuilts" />
 
   <!-- Vendor Modules (Motorola) -->
   <project path="vendor/mediatek/kernel_modules/connectivity/wlan-core-gen4m" name="vendor-mediatek-kernel_modules-connectivity-wlan-core-gen4m" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
