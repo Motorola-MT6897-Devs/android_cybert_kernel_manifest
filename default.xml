@@ -6,7 +6,10 @@
   
   <remote name="moto"
           fetch="git@github.com:MotorolaMobilityLLC/" />
-          
+
+  <remote name="mt6897-devs" 
+          fetch="https://github.com/Motorola-MT6897-Devs" />
+
   <default revision="android15-release"
            remote="aosp"
            sync-j="4" />
@@ -53,12 +56,12 @@
   <!-- Build Systems -->
   <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" clone-depth="1" groups="build" />
   <project path="build/kernel" name="kernel/build" revision="main-kernel-2025" clone-depth="1" groups="kernel" />
-  <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="build" />
+  <project path="build/bazel_mgk_rules" name="android-build-bazel_mgk_rules" remote="mt6897-devs" revision="lineage-23.0" clone-depth="1" groups="build" />
   <project path="system/tools/mkbootimg" name="platform/system/tools/mkbootimg" clone-depth="1" groups="build" />
 
   <!-- Kernel Sources (Motorola) -->
-  <project path="kernel-6.1" name="kernel-mtk" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
-  <project path="kernel_device_modules-6.1" name="kernel-kernel_device_modules-6.1" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
+  <project path="kernel-6.1" name="android_kernel_motorola_cybert" remote="mt6897-devs" revision="lineage-23.0" clone-depth="1" groups="kernel" />
+  <project path="kernel_device_modules-6.1" name="android_kernel_motorola_cybert-modules" remote="mt6897-devs" revision="lineage-23.0" clone-depth="1" groups="kernel" />
   <project path="motorola/kernel/modules" name="motorola-kernel-modules" remote="moto" revision="refs/heads/android-16-release-w1vv36h.7-21-5" clone-depth="1" groups="vendor" />
 
   <!-- Vendor Modules (Motorola) -->
