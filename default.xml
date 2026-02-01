@@ -10,7 +10,7 @@
   <remote name="mt6897-devs" 
           fetch="https://github.com/Motorola-MT6897-Devs" />
 
-  <default revision="android15-release"
+  <default revision="main-kernel-2026"
            remote="aosp"
            sync-j="4" />
            
@@ -18,44 +18,42 @@
   <project path="external/libcap" name="platform/external/libcap" clone-depth="1" groups="external" />
   <project path="external/libcap-ng" name="platform/external/libcap-ng" clone-depth="1" groups="external" />
   <project path="external/bazel-skylib" name="platform/external/bazel-skylib" clone-depth="1" groups="external" />
-  <project path="external/bazelbuild-rules_cc" name="platform/external/bazelbuild-rules_cc" revision="main-kernel" clone-depth="1" groups="external" />
-  <project path="external/bazelbuild-platforms" name="platform/external/bazelbuild-platforms" revision="main-kernel-2025" clone-depth="1" groups="external" />
+  <project path="external/bazelbuild-rules_cc" name="platform/external/bazelbuild-rules_cc" clone-depth="1" groups="external" />
+  <project path="external/bazelbuild-platforms" name="platform/external/bazelbuild-platforms" clone-depth="1" groups="external" />
   <project path="external/bazelbuild-rules_license" name="platform/external/bazelbuild-rules_license" clone-depth="1" groups="external" />
-  <project path="external/bazelbuild-rules_pkg" name="platform/external/bazelbuild-rules_pkg" clone-depth="1" revision="main-kernel" groups="external" />
-  <project path="external/bazelbuild-rules_python" name="platform/external/bazelbuild-rules_python" clone-depth="1" revision="main-kernel" groups="external" />
+  <project path="external/bazelbuild-rules_pkg" name="platform/external/bazelbuild-rules_pkg" clone-depth="1"  groups="external" />
+  <project path="external/bazelbuild-rules_python" name="platform/external/bazelbuild-rules_python" clone-depth="1"  groups="external" />
   <project path="external/bazelbuild-rules_proto" name="platform/external/bazelbuild-rules-proto" revision="master" clone-depth="1" groups="external" />
-  <project path="external/bazelbuild-rules_java" name="platform/external/bazelbuild-rules_java" clone-depth="1" groups="external" />
+  <project path="external/bazelbuild-rules_java" name="platform/external/bazelbuild-rules_java" revision="android16-release" clone-depth="1" groups="external" />
   <project path="external/protobuf" name="platform/external/protobuf" clone-depth="1" groups="external" />
-  <project path="external/bazel-contrib-bazel_features" name="platform/external/bazel-contrib-bazel_features" revision="main-kernel" clone-depth="1" groups="external" />
+  <project path="external/bazel-contrib-bazel_features" name="platform/external/bazel-contrib-bazel_features" clone-depth="1" groups="external" />
   <project path="external/zlib" name="platform/external/zlib" clone-depth="1" groups="external" />
-  <project path="external/bazelbuild-rules_rust" name="platform/external/bazelbuild-rules_rust" clone-depth="1" revision="main-kernel" groups="external" />
-  <project path="external/bazelbuild-bazel-central-registry" name="platform/external/bazelbuild-bazel-central-registry" revision="main-kernel-2025" clone-depth="1" groups="external" />
-  <project path="external/python/absl-py" name="platform/external/python/absl-py" clone-depth="1" revision="main-kernel" groups="external" />
-  <project path="external/bazelbuild-rules_shell" name="platform/external/bazelbuild-rules_shell" revision="main-kernel-2025" clone-depth="1" groups="external" />
-  <project path="external/pigz" name="platform/external/pigz" revision="main-kernel" clone-depth="1" groups="external" />
-  <project path="external/toybox" name="platform/external/toybox" revision="main-kernel" clone-depth="1" groups="external" />
-  <project path="external/lz4" name="platform/external/lz4" revision="main-kernel" clone-depth="1" groups="external" />
-  <project path="external/zopfli" name="platform/external/zopfli" revision="main-kernel" clone-depth="1" groups="external" />
-  <project path="external/kmod" name="platform/external/kmod" revision="main-kernel" clone-depth="1" groups="external" />
+  <project path="external/bazelbuild-rules_rust" name="platform/external/bazelbuild-rules_rust" clone-depth="1"  groups="external" />
+  <project path="external/bazelbuild-bazel-central-registry" name="platform/external/bazelbuild-bazel-central-registry" clone-depth="1" groups="external" />
+  <project path="external/python/absl-py" name="platform/external/python/absl-py" clone-depth="1"  groups="external" />
+  <project path="external/bazelbuild-rules_shell" name="platform/external/bazelbuild-rules_shell" clone-depth="1" groups="external" />
+  <project path="external/pigz" name="platform/external/pigz" clone-depth="1" groups="external" />
+  <project path="external/toybox" name="platform/external/toybox" clone-depth="1" groups="external" />
+  <project path="external/lz4" name="platform/external/lz4" clone-depth="1" groups="external" />
+  <project path="external/zopfli" name="platform/external/zopfli" clone-depth="1" groups="external" />
+  <project path="external/kmod" name="platform/external/kmod" clone-depth="1" groups="external" />
   
   <!-- Prebuilts -->
-  <project path="prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" clone-depth="1" groups="prebuilts" />
-  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" revision="main-kernel-2025" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" revision="android16-release" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1" groups="prebuilts" />
   <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1" groups="prebuilts" />
-  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" revision="main-kernel-2025" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" groups="prebuilts" />
   <project path="prebuilts/jdk/jdk11" name="platform/prebuilts/jdk/jdk11" revision="build-tools-release" clone-depth="1" groups="prebuilts" />
-  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" revision="main-kernel-2025" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" groups="prebuilts" />
   <project path="prebuilts/rust" name="platform/prebuilts/rust" clone-depth="1" groups="prebuilts" />
   <project path="prebuilts/clang-tools" name="platform/prebuilts/clang-tools" clone-depth="1" groups="prebuilts" />
    
   <!-- NDK Prebuilts (From Toolchain) -->
-  <project path="prebuilts/ndk-r27" name="toolchain/prebuilts/ndk/r27" remote="aosp" revision="main-kernel" clone-depth="1" groups="prebuilts" />
-  <project path="prebuilts/ndk-r26" name="toolchain/prebuilts/ndk/r26" remote="aosp" revision="main-kernel-2025" clone-depth="1" groups="prebuilts" />
-  <project path="prebuilts/ndk/r23" name="toolchain/prebuilts/ndk/r23" remote="aosp" revision="refs/tags/android-15.0.0_r0.99" clone-depth="1" groups="prebuilts" />
-
+  <project path="prebuilts/ndk-r27" name="toolchain/prebuilts/ndk/r27" remote="aosp" clone-depth="1" groups="prebuilts" />
+  <project path="prebuilts/ndk-r26" name="toolchain/prebuilts/ndk/r26" remote="aosp" clone-depth="1" groups="prebuilts" />
   <!-- Build Systems -->
-  <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" clone-depth="1" groups="build" />
-  <project path="build/kernel" name="kernel/build" revision="main-kernel-2025" clone-depth="1" groups="kernel" />
+  <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" revision="android16-release" clone-depth="1" groups="build" />
+  <project path="build/kernel" name="kernel/build" clone-depth="1" groups="kernel" />
   <project path="build/bazel_mgk_rules" name="android-build-bazel_mgk_rules" remote="mt6897-devs" revision="lineage-23.0" clone-depth="1" groups="build" />
   <project path="system/tools/mkbootimg" name="platform/system/tools/mkbootimg" clone-depth="1" groups="build" />
 
