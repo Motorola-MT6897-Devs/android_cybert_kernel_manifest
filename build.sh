@@ -104,5 +104,61 @@ echo ""
 echo "DTBs built:"
 ls -la ${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/dtbs/*.dtb* 2>/dev/null || echo "  (none)"
 
+# --- Image Generation ---
+echo ""
+echo "Generating images..."
+DIST_DIR="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
+DTB_DIST_DIR="${DIST_DIR}/dtbs"
+MKBOOTIMG="${KERNEL_ROOT_DIR}/prebuilts/kernel-build-tools/linux_musl-x86/bin/mkbootimg"
+MKDTBOIMG="${KERNEL_ROOT_DIR}/prebuilts/kernel-build-tools/linux_musl-x86/bin/mkdtboimg"
+# Find kernel image (search for Image only to avoid Image.gz or intermediates)
+KERNEL_IMAGE=$(find ${DIST_DIR} -name "Image" -type f | grep -v "bazel-out" | head -1)
+
+# 1. Generate boot.img (Kernel only)
+if [ -n "${KERNEL_IMAGE}" ] && [ -f "${MKBOOTIMG}" ]; then
+    echo "  Creating boot.img..."
+    # User provided command line
+    KERNEL_CMDLINE="bootopt=64S3,32N2,64N2 androidboot.selinux=permissive androidboot.usbcontroller=11201000.usb0"
+    
+    ${MKBOOTIMG} --header_version 4 \
+        --kernel "${KERNEL_IMAGE}" \
+        --cmdline "${KERNEL_CMDLINE}" \
+        --output "${DIST_DIR}/boot.img"
+    echo "    -> boot.img created at ${DIST_DIR}/boot.img"
+else
+    echo "  Skipping boot.img: Kernel Image or mkbootimg not found"
+    [ -z "${KERNEL_IMAGE}" ] && echo "    Missing: Kernel Image in dist"
+    [ ! -f "${MKBOOTIMG}" ] && echo "    Missing: ${MKBOOTIMG}"
+fi
+
+# 2. Generate dtbo.img (Overlays)
+if [ -f "${MKDTBOIMG}" ]; then
+    echo "  Creating dtbo.img..."
+    # Find all dtbo files in dist/dtbs
+    # Sort to ensure consistent order
+    DTBO_FILES=$(find ${DTB_DIST_DIR} -name "*.dtbo" | sort)
+    
+    if [ -n "${DTBO_FILES}" ]; then
+        ${MKDTBOIMG} create "${DIST_DIR}/dtbo.img" ${DTBO_FILES}
+        echo "    -> dtbo.img created at ${DIST_DIR}/dtbo.img"
+    else
+        echo "    No .dtbo files found for dtbo.img"
+    fi
+else
+    echo "  Skipping dtbo.img: mkdtboimg not found"
+fi
+
+# 3. Generate dtb.img (Base DTB + Overlays concatenated, commonly used on MediaTek)
+# Note: Some devices strictly need the base DTB first, then overlays.
+echo "  Creating dtb.img..."
+if [ -f "${DTB_DIST_DIR}/mt6897.dtb" ]; then
+    cat "${DTB_DIST_DIR}/mt6897.dtb" > "${DIST_DIR}/dtb.img"
+    # Append overlays if they exist
+    find ${DTB_DIST_DIR} -name "*.dtbo" | sort | xargs cat >> "${DIST_DIR}/dtb.img" 2>/dev/null
+    echo "    -> dtb.img created at ${DIST_DIR}/dtb.img"
+else
+    echo "    Skipping dtb.img: Base DTB mt6897.dtb not found"
+fi
+
 echo ""
 echo "Build complete! Outputs in: ${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
