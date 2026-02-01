@@ -54,6 +54,7 @@
   <!-- Kernel Sources (Motorola) -->
   <project path="kernel-6.1" name="kernel-mtk" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
   <project path="kernel_device_modules-6.1" name="kernel-kernel_device_modules-6.1" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="kernel" />
+  <project path="motorola/kernel/modules" name="motorola-kernel-modules" remote="moto" revision="refs/heads/android-16-release-w1vv36h.7-21-5" clone-depth="1" groups="vendor" />
 
   <!-- Vendor Modules (Motorola) -->
   <project path="vendor/mediatek/kernel_modules/connectivity/wlan-core-gen4m" name="vendor-mediatek-kernel_modules-connectivity-wlan-core-gen4m" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
