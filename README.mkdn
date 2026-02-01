@@ -12,3 +12,15 @@ Then to sync up:
 ```
 repo sync
 ```
+
+To build kernel and modules
+---------------------------
+
+Clean build directories
+```
+rm -rf MODULE.bazel WORKSPACE WORKSPACE.bzlmod out/
+```
+Start build
+```
+./build.sh
+```
