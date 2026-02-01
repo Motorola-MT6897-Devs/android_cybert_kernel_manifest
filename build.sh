@@ -11,6 +11,11 @@ KERNEL_BAZEL_BUILD_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ
 KERNEL_BAZEL_DIST_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ/dist
 
 # Link Bazel files
+# Create common symlink to kernel-6.1 (required by kleaf toolchain)
+if [ ! -L "common" ] && [ ! -d "common" ]; then
+    echo "Creating common symlink to kernel-6.1..."
+    ln -s kernel-6.1 common
+fi
 if [ ! -f "MODULE.bazel" ]; then
     echo "Creating MODULE.bazel with mgk extension..."
     cat build/kernel/kleaf/bzlmod/bazel.MODULE.bazel > MODULE.bazel
@@ -23,39 +28,10 @@ use_repo(mgk_ext, "mgk_internal")
 use_repo(mgk_ext, "mgk_ko")
 EOF
 fi
-# Generate WORKSPACE.bzlmod with mgk repositories
+# Generate WORKSPACE.bzlmod (unused in bzlmod but may be needed for compatibility)
 if [ ! -f "WORKSPACE.bzlmod" ]; then
-    echo "Creating WORKSPACE.bzlmod with mgk repositories..."
-    cat > WORKSPACE.bzlmod << 'EOF'
-# Local repository for common kernel sources
-local_repository(
-    name = "common",
-    path = "kernel-6.1",
-)
-
-# MGK repository rules for Motorola kernel build
-load("//build/bazel_mgk_rules/kleaf:key_value_repo.bzl", "key_value_repo")
-
-key_value_repo(
-    name = "mgk_info",
-)
-
-key_value_repo(
-    name = "mgk_internal",
-    additional_values = {
-        "mgk_internal": "False",
-    },
-)
-
-key_value_repo(
-    name = "mgk_ko",
-    additional_values = {
-        "msync2_lic_6.1_set": "False",
-        "msync2_lic_6.6_set": "False",
-        "msync2_lic_mainline_set": "False",
-    },
-)
-EOF
+    echo "Creating empty WORKSPACE.bzlmod..."
+    touch WORKSPACE.bzlmod
 fi
 # Create empty WORKSPACE file (required for Bazel)
 if [ ! -L "WORKSPACE" ] && [ ! -f "WORKSPACE" ]; then
