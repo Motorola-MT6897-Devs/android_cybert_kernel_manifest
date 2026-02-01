@@ -57,7 +57,7 @@
   <project path="motorola/kernel/modules" name="motorola-kernel-modules" remote="moto" revision="refs/heads/android-16-release-w1vv36h.7-21-5" clone-depth="1" groups="vendor" />
 
   <!-- Vendor Modules (Motorola) -->
-  <project path="vendor/mediatek/kernel_modules/connectivity/wlan-core-gen4m" name="vendor-mediatek-kernel_modules-connectivity-wlan-core-gen4m" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
+  <project path="vendor/mediatek/kernel_modules/connectivity/wlan/core/gen4m" name="vendor-mediatek-kernel_modules-connectivity-wlan-core-gen4m" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/connectivity/bt/linux_v2" name="vendor-mediatek-kernel_modules-connectivity-bt-linux_v2" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/connectivity/bt/mt66xx" name="vendor-mediatek-kernel_modules-connectivity-bt-mt66xx" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/connectivity/bt/mt76xx-sdio" name="vendor-mediatek-kernel_modules-connectivity-bt-mt76xx-sdio" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
@@ -66,10 +66,10 @@
   <project path="vendor/mediatek/kernel_modules/connectivity/conninfra" name="vendor-mediatek-kernel_modules-connectivity-conninfra" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/connectivity/fmradio" name="vendor-mediatek-kernel_modules-connectivity-fmradio" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/connectivity/gps" name="vendor-mediatek-kernel_modules-connectivity-gps" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
-  <project path="vendor/mediatek/kernel_modules/connectivity/wlan-adaptor" name="vendor-mediatek-kernel_modules-connectivity-wlan-adaptor" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
+  <project path="vendor/mediatek/kernel_modules/connectivity/wlan/adaptor" name="vendor-mediatek-kernel_modules-connectivity-wlan-adaptor" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/gpu" name="vendor-mediatek-kernel_modules-gpu" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/met_drv_v3" name="vendor-mediatek-kernel_modules-met_drv_v3" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
- <project path="vendor/mediatek/kernel_modules/mtkcam" name="vendor-mediatek-kernel_modules-mtkcam" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
+  <project path="vendor/mediatek/kernel_modules/mtkcam" name="vendor-mediatek-kernel_modules-mtkcam" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/hbt_driver_cus"  name="vendor-mediatek-kernel_modules-hbt_driver_cus" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
 
   <!-- Manifest Repo & Build Script -->
