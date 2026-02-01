@@ -45,9 +45,9 @@ PRIVATE_BAZEL_BUILD_FLAG="--experimental_writable_outputs --config=stamp --repo_
 
 my_kernel_target=${KERNEL_DEFCONFIG%_defconfig}
 
-PRIVATE_BAZEL_BUILD_GOAL="//${KERNEL_DIR}:mgk_64_k61_modules_install"
+PRIVATE_BAZEL_BUILD_GOAL="//${KERNEL_DIR}:mgk_64_k61_internal_modules_install.${KERNEL_BUILD_VARIANT}"
 
-PRIVATE_BAZEL_DIST_GOAL="//${KERNEL_DIR}:mgk_64_k61_dist"
+PRIVATE_BAZEL_DIST_GOAL="//${KERNEL_DIR}:mgk_64_k61_internal_dist.${KERNEL_BUILD_VARIANT}"
 
 build/kernel/kleaf/bazel.sh --output_root=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUILD_OUT} --output_base=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUILD_OUT}/bazel/output_user_root/output_base build ${PRIVATE_BAZEL_BUILD_FLAG} ${PRIVATE_BAZEL_BUILD_GOAL}
 
