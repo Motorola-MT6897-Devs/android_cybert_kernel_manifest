@@ -160,5 +160,79 @@ else
     echo "    Skipping dtb.img: Base DTB mt6897.dtb not found"
 fi
 
+# --- Module Organization ---
+echo ""
+echo "Organizing modules..."
+# Search in the entire device modules output directory to find both GKI and Vendor modules
+# GKI modules are often in mgk_64_k61* dirs, Vendor in *_modules_install.
+MODULES_SEARCH_PATH="${DIST_DIR}/kernel_device_modules-6.1"
+
+if [ -d "${MODULES_SEARCH_PATH}" ]; then
+    echo "  Searching for modules in: ${MODULES_SEARCH_PATH}"
+    
+    # Define destination directories
+    SYSTEM_MOD_DIR="${DIST_DIR}/system"
+    VENDOR_MOD_DIR="${DIST_DIR}/vendor"
+    VENDOR_RAMDISK_MOD_DIR="${DIST_DIR}/vendor_ramdisk"
+    
+    mkdir -p "${SYSTEM_MOD_DIR}" "${VENDOR_MOD_DIR}" "${VENDOR_RAMDISK_MOD_DIR}"
+    
+    # Helper function to copy modules from list
+    copy_modules() {
+        local list_file="$1"
+        local dest_dir="$2"
+        local label="$3"
+        
+        if [ -f "${list_file}" ]; then
+            echo "  Processing ${label} from $(basename ${list_file})..."
+            while IFS= read -r module || [ -n "$module" ]; do
+                # Trim whitespace
+                module=$(echo "$module" | xargs)
+                [ -z "$module" ] && continue
+                [ "${module:0:1}" = "#" ] && continue # Skip comments
+                
+                # Find module file (handle potential paths or just filename)
+                local mod_name=$(basename "$module")
+                # Find the module recursively in the search path
+                # Use head -1 to pick the first match if duplicates exist (usually identical)
+                local src_path=$(find "${MODULES_SEARCH_PATH}" -name "${mod_name}" 2>/dev/null | head -1)
+                
+                if [ -n "${src_path}" ]; then
+                    cp -f "${src_path}" "${dest_dir}/"
+                else
+                    echo "    Warning: Module ${mod_name} not found in build output"
+                fi
+            done < "${list_file}"
+            echo "    -> Copied to ${dest_dir}"
+        else
+            echo "  Skipping ${label}: List file not found: ${list_file}"
+        fi
+    }
+
+    # 1. System Modules
+    copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.system" "${SYSTEM_MOD_DIR}" "System Modules"
+    
+    # 2. Vendor Modules
+    # Check for modules.load.vendor OR modules.recovery.vendor as user hinted variability
+    if [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor" ]; then
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor" "${VENDOR_MOD_DIR}" "Vendor Modules"
+    elif [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.recovery.vendor" ]; then
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.recovery.vendor" "${VENDOR_MOD_DIR}" "Vendor Modules"
+    fi
+
+    # 3. Vendor Ramdisk Modules
+    if [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor_ramdisk" ]; then
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor_ramdisk" "${VENDOR_RAMDISK_MOD_DIR}" "Vendor Ramdisk Modules"
+    fi
+    # Recovery modules generally go to vendor_ramdisk in generic setups, or separate recovery ramdisk.
+    # User requested: "recovery goes in vendor_ramdisk"
+    if [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.load.recovery" ]; then
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.recovery" "${VENDOR_RAMDISK_MOD_DIR}" "Recovery Modules (to vendor_ramdisk)"
+    fi
+
+else
+    echo "Warning: Could not find modules installation directory in dist"
+fi
+
 echo ""
 echo "Build complete! Outputs in: ${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
