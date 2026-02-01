@@ -20,11 +20,33 @@ if [ ! -f "WORKSPACE.bzlmod" ]; then
     ln -s build/kernel/kleaf/bzlmod/bazel.WORKSPACE.bzlmod WORKSPACE.bzlmod
 fi
 if [ ! -L "WORKSPACE" ] && [ ! -f "WORKSPACE" ]; then
-    echo "Creating WORKSPACE file with common repository..."
+    echo "Creating WORKSPACE file with required repositories..."
     cat > WORKSPACE << 'EOF'
 local_repository(
     name = "common",
     path = "kernel-6.1",
+)
+
+load("//build/bazel_mgk_rules/kleaf:key_value_repo.bzl", "key_value_repo")
+
+key_value_repo(
+    name = "mgk_info",
+)
+
+key_value_repo(
+    name = "mgk_internal",
+    additional_values = {
+        "mgk_internal": "False",
+    },
+)
+
+key_value_repo(
+    name = "mgk_ko",
+    additional_values = {
+        "msync2_lic_6.1_set": "False",
+        "msync2_lic_6.6_set": "False",
+        "msync2_lic_mainline_set": "False",
+    },
 )
 EOF
 fi
