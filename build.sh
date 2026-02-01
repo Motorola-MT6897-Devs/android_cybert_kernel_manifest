@@ -15,18 +15,17 @@ if [ ! -f "MODULE.bazel" ]; then
     echo "Creating MODULE.bazel symlink..."
     ln -s build/kernel/kleaf/bzlmod/bazel.MODULE.bazel MODULE.bazel
 fi
+# Generate WORKSPACE.bzlmod with mgk repositories
 if [ ! -f "WORKSPACE.bzlmod" ]; then
-    echo "Creating WORKSPACE.bzlmod symlink..."
-    ln -s build/kernel/kleaf/bzlmod/bazel.WORKSPACE.bzlmod WORKSPACE.bzlmod
-fi
-if [ ! -L "WORKSPACE" ] && [ ! -f "WORKSPACE" ]; then
-    echo "Creating WORKSPACE file with required repositories..."
-    cat > WORKSPACE << 'EOF'
+    echo "Creating WORKSPACE.bzlmod with mgk repositories..."
+    cat > WORKSPACE.bzlmod << 'EOF'
+# Local repository for common kernel sources
 local_repository(
     name = "common",
     path = "kernel-6.1",
 )
 
+# MGK repository rules for Motorola kernel build
 load("//build/bazel_mgk_rules/kleaf:key_value_repo.bzl", "key_value_repo")
 
 key_value_repo(
@@ -49,6 +48,11 @@ key_value_repo(
     },
 )
 EOF
+fi
+# Create empty WORKSPACE file (required for Bazel)
+if [ ! -L "WORKSPACE" ] && [ ! -f "WORKSPACE" ]; then
+    echo "Creating empty WORKSPACE file..."
+    touch WORKSPACE
 fi
 
 export BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1 DEFCONFIG_OVERLAYS="mt6897_overlay.config cybert_overlay.config" KERNEL_VERSION=kernel-6.1 SOURCE_DATE_EPOCH=0 JAVA_HOME="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86" PATH="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86/bin:${PATH}"
