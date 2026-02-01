@@ -17,7 +17,7 @@ if [ ! -f "MODULE.bazel" ]; then
     cat >> MODULE.bazel << 'EOF'
 
 # MGK extension for Motorola kernel builds
-mgk_ext = use_extension("//kernel_device_modules-6.1/kernel/kleaf:mgk_ext.bzl", "mgk_ext")
+mgk_ext = use_extension("//build/bazel_mgk_rules:mgk_ext.bzl", "mgk_ext")
 use_repo(mgk_ext, "mgk_info")
 use_repo(mgk_ext, "mgk_internal")
 use_repo(mgk_ext, "mgk_ko")
