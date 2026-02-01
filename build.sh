@@ -12,8 +12,16 @@ KERNEL_BAZEL_DIST_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ/dist
 
 # Link Bazel files
 if [ ! -f "MODULE.bazel" ]; then
-    echo "Creating MODULE.bazel symlink..."
-    ln -s build/kernel/kleaf/bzlmod/bazel.MODULE.bazel MODULE.bazel
+    echo "Creating MODULE.bazel with mgk extension..."
+    cat build/kernel/kleaf/bzlmod/bazel.MODULE.bazel > MODULE.bazel
+    cat >> MODULE.bazel << 'EOF'
+
+# MGK extension for Motorola kernel builds
+mgk_ext = use_extension("//kernel_device_modules-6.1/kernel/kleaf:mgk_ext.bzl", "mgk_ext")
+use_repo(mgk_ext, "mgk_info")
+use_repo(mgk_ext, "mgk_internal")
+use_repo(mgk_ext, "mgk_ko")
+EOF
 fi
 # Generate WORKSPACE.bzlmod with mgk repositories
 if [ ! -f "WORKSPACE.bzlmod" ]; then
