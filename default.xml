@@ -69,6 +69,7 @@
   <project path="vendor/mediatek/kernel_modules/met_drv_v3" name="vendor-mediatek-kernel_modules-met_drv_v3" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/connectivity/bt-linux_v2" name="vendor-mediatek-kernel_modules-connectivity-bt-linux_v2" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
   <project path="vendor/mediatek/kernel_modules/mtkcam" name="vendor-mediatek-kernel_modules-mtkcam" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
+  <project path="vendor/mediatek/kernel_modules/hbt_driver"  name="vendor-mediatek-kernel_modules-hbt_driver_cus" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="vendor" />
 
   <!-- Manifest Repo & Build Script -->
   <remote name="moto_devs" fetch="https://github.com/Motorola-MT6897-Devs/" />
