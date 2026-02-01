@@ -48,7 +48,7 @@
   <!-- Build Systems -->
   <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" clone-depth="1" groups="build" />
   <project path="build/kernel" name="kernel/build" revision="main-kernel-2025" clone-depth="1" groups="kernel" />
-  <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" remote="moto" revision="refs/heads/android-15-release-vvta35" clone-depth="1" groups="build" />
+  <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" remote="moto" revision="refs/tags/MMI-W1VV36H.7-21-5" clone-depth="1" groups="build" />
   <project path="system/tools/mkbootimg" name="platform/system/tools/mkbootimg" clone-depth="1" groups="build" />
 
   <!-- Kernel Sources (Motorola) -->
