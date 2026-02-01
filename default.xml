@@ -38,6 +38,7 @@
   <project path="external/zopfli" name="platform/external/zopfli" clone-depth="1" groups="external" />
   <project path="external/kmod" name="platform/external/kmod" clone-depth="1" groups="external" />
   <project path="external/bazel-contrib-rules_devicetree" name="platform/external/bazel-contrib-rules_devicetree" clone-depth="1" groups="external" />
+  <project path="external/bazel-contrib-supply-chain" name="platform/external/bazel-contrib-supply-chain" clone-depth="1" groups="external" />
   
   <!-- Prebuilts -->
   <project path="prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" revision="android16-release" clone-depth="1" groups="prebuilts" />
