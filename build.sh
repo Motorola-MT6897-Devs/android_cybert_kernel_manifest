@@ -142,15 +142,26 @@ else
 fi
 
 # 2. Generate dtbo.img (Overlays)
+# BOARD_DTBOIMG_PARTITION_SIZE from BoardConfig.mk
+BOARD_DTBOIMG_PARTITION_SIZE=8388608
+
 if [ -f "${MKDTBOIMG}" ]; then
     echo "  Creating dtbo.img..."
-    # Find all dtbo files in dist/dtbs
-    # Sort to ensure consistent order
-    DTBO_FILES=$(find ${DTB_DIST_DIR} -name "*.dtbo" | sort)
+    # Use alphabetical ordering for consistency
+    # Bootloader matches overlays based on hardware detection, not index order
+    DTBO_FILES=$(find ${DTB_DIST_DIR} -name "*.dtbo" -type f | sort)
     
     if [ -n "${DTBO_FILES}" ]; then
-        ${MKDTBOIMG} create "${DIST_DIR}/dtbo.img" ${DTBO_FILES}
-        echo "    -> dtbo.img created at ${DIST_DIR}/dtbo.img"
+        DTBO_ARGS=""
+        DTBO_ID=0
+        for dtbo in ${DTBO_FILES}; do
+            DTBO_ARGS="${DTBO_ARGS} ${dtbo} --id=${DTBO_ID}"
+            DTBO_ID=$((DTBO_ID + 1))
+        done
+        ${MKDTBOIMG} create "${DIST_DIR}/dtbo.img" ${DTBO_ARGS}
+        # Pad to partition size (matches stock)
+        truncate -s ${BOARD_DTBOIMG_PARTITION_SIZE} "${DIST_DIR}/dtbo.img"
+        echo "    -> dtbo.img created with ${DTBO_ID} overlays, padded to ${BOARD_DTBOIMG_PARTITION_SIZE} bytes"
     else
         echo "    No .dtbo files found for dtbo.img"
     fi
