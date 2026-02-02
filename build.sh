@@ -123,6 +123,12 @@ if [ -n "${KERNEL_IMAGE}" ] && [ -f "${MKBOOTIMG}" ]; then
     ${MKBOOTIMG} --header_version 4 \
         --kernel "${KERNEL_IMAGE}" \
         --cmdline "${KERNEL_CMDLINE}" \
+        --base 0x40000000 \
+        --kernel_offset 0x00000000 \
+        --ramdisk_offset 0x26f00000 \
+        --tags_offset 0x07c80000 \
+        --dtb_offset 0x07c80000 \
+        --pagesize 4096 \
         --output "${DIST_DIR}/boot.img"
     echo "    -> boot.img created at ${DIST_DIR}/boot.img"
 else
