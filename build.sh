@@ -34,7 +34,7 @@ if [ ! -L "WORKSPACE" ] && [ ! -f "WORKSPACE" ]; then
     touch WORKSPACE
 fi
 
-export BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1 DEFCONFIG_OVERLAYS="cybert.config" KERNEL_VERSION=kernel-6.1 SOURCE_DATE_EPOCH=0 JAVA_HOME="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86" PATH="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86/bin:${PATH}"
+export BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1 DEFCONFIG_OVERLAYS="../../arch/arm64/configs/ext_config/moto-mgk_64_k61.config ../../arch/arm64/configs/ext_config/moto-mgk_64_k61-cybert.config" KERNEL_VERSION=kernel-6.1 SOURCE_DATE_EPOCH=0 JAVA_HOME="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86" PATH="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86/bin:${PATH}"
 
 PRIVATE_BAZEL_BUILD_FLAG="--experimental_writable_outputs --config=stamp --noincompatible_disallow_empty_glob --repo_manifest=${KERNEL_ROOT_DIR}/${KERNEL_DIR}/fake_manifest.xml"
 
