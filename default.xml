@@ -7,14 +7,14 @@
 
   <superproject name="kernel/superproject" remote="aosp" revision="common-android14-6.1"/>
 
-  <project path="build/kernel" name="kernel/build">
+  <project path="build/kernel" name="kernel/build" clone-depth="1">
     <linkfile src="kleaf/bazel.sh" dest="tools/bazel"/>
     <linkfile src="build_test.sh" dest="build/build_test.sh"/>
     <linkfile src="config.sh" dest="build/config.sh"/>
   </project>
-  <project path="common" name="kernel/common" revision="android14-6.1"/>
-  <project path="kernel/configs" name="kernel/configs" revision="main"/>
-  <project path="kernel/tests" name="kernel/tests" revision="main">
+  <project path="common" name="kernel/common" revision="android14-6.1" clone-depth="1"/>
+  <project path="kernel/configs" name="kernel/configs" revision="main" clone-depth="1"/>
+  <project path="kernel/tests" name="kernel/tests" revision="main" clone-depth="1">
     <linkfile src="tools/run_test_only.sh" dest="run_test_only.sh"/>
     <linkfile src="tools/launch_cvd.sh" dest="launch_cvd.sh"/>
   </project>
