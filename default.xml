@@ -3,6 +3,7 @@
   <remote  name="aosp" fetch="https://android-review.googlesource.com/"/>
   <default revision="main-kernel-build-2023" remote="aosp" sync-j="4"/>
   <remote name="motorola" fetch="https://github.com/MotorolaMobilityLLC/"/>
+  <remote name="moto_devs" fetch="https://github.com/Motorola-MT6897-Devs/"/>
 
   <superproject name="kernel/superproject" remote="aosp" revision="common-android14-6.1"/>
 
@@ -67,5 +68,10 @@
   <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1">
     <linkfile src="BUILD.bazel" dest="BUILD" />
     <linkfile src="kleaf/bazel.WORKSPACE" dest="WORKSPACE" />
+  </project>
+
+  <!-- Manifest Repo & Build Script -->
+  <project path="build/manifest" name="android_cybert_kernel_manifest" remote="moto_devs" revision="android14buildtest">
+    <copyfile src="build.sh" dest="build.sh" />
   </project>
 </manifest>
