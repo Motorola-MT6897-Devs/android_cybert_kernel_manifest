@@ -7,17 +7,10 @@
 
   <superproject name="kernel/superproject" remote="aosp" revision="common-android14-6.1"/>
 
-  <project path="build/kernel" name="kernel/build" clone-depth="1">
-    <linkfile src="kleaf/bazel.sh" dest="tools/bazel"/>
-    <linkfile src="build_test.sh" dest="build/build_test.sh"/>
-    <linkfile src="config.sh" dest="build/config.sh"/>
-  </project>
+  <project path="build/kernel" name="kernel/build" clone-depth="1"/>
   <project path="common" name="kernel/common" revision="android14-6.1" clone-depth="1"/>
   <project path="kernel/configs" name="kernel/configs" revision="main" clone-depth="1"/>
-  <project path="kernel/tests" name="kernel/tests" revision="main" clone-depth="1">
-    <linkfile src="tools/run_test_only.sh" dest="run_test_only.sh"/>
-    <linkfile src="tools/launch_cvd.sh" dest="launch_cvd.sh"/>
-  </project>
+  <project path="kernel/tests" name="kernel/tests" revision="main" clone-depth="1"/>
   <project path="common-modules/virtual-device" name="kernel/common-modules/virtual-device" revision="android14-6.1" clone-depth="1"/>
   <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1"/>
   <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1"/>
@@ -38,9 +31,7 @@
   <project path="external/python/absl-py" name="platform/external/python/absl-py" clone-depth="1" />
 
   <!-- cybert kernel sources -->
-  <project path="kernel-6.1" name="kernel-mtk" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1">
-    <linkfile src="build.config.constants" dest="build.config.constants" />
-  </project>
+  <project path="kernel-6.1" name="kernel-mtk" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1"/>
   
   <project path="kernel_device_modules-6.1" name="kernel-kernel_device_modules-6.1" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1">
     <linkfile src="build.config.cybert" dest="build.config" />
@@ -65,13 +56,10 @@
   <!-- Motorola kernel modules -->
   <project path="motorola/kernel/modules" name="motorola-kernel-modules" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1"/>
   
-  <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1">
-    <linkfile src="BUILD.bazel" dest="BUILD" />
-    <linkfile src="kleaf/bazel.WORKSPACE" dest="WORKSPACE" />
-  </project>
+  <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1"/>
 
   <!-- Manifest Repo & Build Script -->
   <project path="build/manifest" name="android_cybert_kernel_manifest" remote="moto_devs" revision="android14buildtest">
-    <copyfile src="build.sh" dest="build.sh" />
+    <linkfile src="build.sh" dest="build.sh"/>
   </project>
 </manifest>
