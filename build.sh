@@ -10,28 +10,44 @@ KERNEL_DEFCONFIG_OVERLAYS="mgk_64_k61_defconfig"
 KERNEL_BAZEL_BUILD_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ
 KERNEL_BAZEL_DIST_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ/dist
 
-# Link Bazel files
-if [ ! -L "common" ] && [ ! -d "common" ]; then
-    echo "Creating common symlink to kernel-6.1..."
-    ln -s kernel-6.1 common
+# Disable Bzlmod as we are missing mgk_ext.bzl
+if [ -f "MODULE.bazel" ]; then
+    echo "Disabling MODULE.bazel (Bzlmod) as mgk_ext is missing..."
+    mv MODULE.bazel MODULE.bazel.disabled
 fi
-if [ ! -f "MODULE.bazel" ]; then
-    echo "Creating MODULE.bazel with mgk extension..."
-    cat build/kernel/kleaf/bzlmod/bazel.MODULE.bazel > MODULE.bazel
-    cat >> MODULE.bazel << 'EOF'
+if [ -f "WORKSPACE.bzlmod" ]; then
+    rm -f WORKSPACE.bzlmod
+fi
 
-# MGK extension for Motorola kernel builds
-mgk_ext = use_extension("//build/bazel_mgk_rules:mgk_ext.bzl", "mgk_ext")
-use_repo(mgk_ext, "mgk_info")
-use_repo(mgk_ext, "mgk_internal")
-use_repo(mgk_ext, "mgk_ko")
-EOF
-fi
-if [ ! -f "WORKSPACE.bzlmod" ]; then
-    touch WORKSPACE.bzlmod
-fi
+# Create WORKSPACE with legacy definitions
 if [ ! -L "WORKSPACE" ] && [ ! -f "WORKSPACE" ]; then
-    touch WORKSPACE
+    echo "Creating WORKSPACE..."
+    cat > WORKSPACE << 'EOF'
+load("//build/kernel/kleaf:workspace.bzl", "define_kleaf_workspace")
+load("//build/bazel_mgk_rules:kleaf/key_value_repo.bzl", "key_value_repo")
+
+key_value_repo(
+    name = "mgk_info",
+)
+
+load("@mgk_info//:dict.bzl","KERNEL_VERSION")
+define_kleaf_workspace(common_kernel_package = "@//"+KERNEL_VERSION)
+
+load("//build/kernel/kleaf:workspace_epilog.bzl", "define_kleaf_workspace_epilog")
+define_kleaf_workspace_epilog()
+
+new_local_repository(
+    name="mgk_internal",
+    path="vendor/mediatek",
+    build_file = "//build/bazel_mgk_rules:kleaf/BUILD.internal"
+)
+
+new_local_repository(
+    name="mgk_ko",
+    path="vendor/mediatek/kernel_modules",
+    build_file = "//build/bazel_mgk_rules:kleaf/BUILD.ko"
+)
+EOF
 fi
 
 export BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1 DEFCONFIG_OVERLAYS="../../arch/arm64/configs/ext_config/moto-mgk_64_k61-cybert.config" KERNEL_VERSION=kernel-6.1 SOURCE_DATE_EPOCH=$(date +%s) JAVA_HOME="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86" PATH="${KERNEL_ROOT_DIR}/prebuilts/jdk/jdk11/linux-x86/bin:${PATH}"
