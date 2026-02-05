@@ -117,37 +117,6 @@ echo ""
 echo "Generating images..."
 DIST_DIR="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
 DTB_DIST_DIR="${DIST_DIR}/dtbs"
-MKBOOTIMG="${KERNEL_ROOT_DIR}/prebuilts/kernel-build-tools/linux_musl-x86/bin/mkbootimg"
-
-# Find kernel image - use LZ4 compressed kernel (verified stock uses LZ4)
-KERNEL_IMAGE=$(find ${DIST_DIR} -name "Image.lz4" -type f | grep -v "bazel-out" | head -1)
-
-# Partition size from BoardConfig.mk
-BOARD_BOOTIMAGE_PARTITION_SIZE=67108864
-
-# 1. Generate boot.img (Kernel only, matching LineageOS structure)
-# BOARD_MKBOOTIMG_ARGS from LineageOS BoardConfig.mk:
-#   --dtb_offset, --header_version, --kernel_offset, --ramdisk_offset, --tags_offset
-if [ -n "${KERNEL_IMAGE}" ] && [ -f "${MKBOOTIMG}" ]; then
-    echo "  Creating boot.img..."
-    ${MKBOOTIMG} \
-        --header_version 4 \
-        --kernel "${KERNEL_IMAGE}" \
-        --kernel_offset 0x00000000 \
-        --ramdisk_offset 0x26f00000 \
-        --tags_offset 0x07c80000 \
-        --dtb_offset 0x07c80000 \
-        --os_version 16.0.0 \
-        --os_patch_level 2025-12 \
-        --output "${DIST_DIR}/boot.img"
-    # Pad to partition size (matches LineageOS build)
-    truncate -s ${BOARD_BOOTIMAGE_PARTITION_SIZE} "${DIST_DIR}/boot.img"
-    echo "    -> boot.img created and padded to ${BOARD_BOOTIMAGE_PARTITION_SIZE} bytes"
-else
-    echo "  Skipping boot.img: Kernel Image or mkbootimg not found"
-    [ -z "${KERNEL_IMAGE}" ] && echo "    Missing: Kernel Image in dist"
-    [ ! -f "${MKBOOTIMG}" ] && echo "    Missing: ${MKBOOTIMG}"
-fi
 
 # 3. Generate dtb.img (Base DTB + Overlays concatenated, commonly used on MediaTek)
 # Note: Some devices strictly need the base DTB first, then overlays.
