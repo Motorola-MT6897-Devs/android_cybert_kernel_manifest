@@ -36,20 +36,7 @@
   <project path="kernel_device_modules-6.1" name="android_kernel_motorola_cybert-modules" revision="android14buildtest" remote="moto_devs" clone-depth="1"/>
 
   <!-- MediaTek kernel modules -->
-  <project path="vendor/mediatek/kernel_modules/connectivity/wlan/core/gen4m" name="android_vendor_mediatek_kernel-modules_connectivity_wlan_core_gen4m" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/bt/linux_v2" name="android_vendor_mediatek_kernel_modules_connectivity_bt_linux_v2" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/bt/mt66xx" name="android_vendor_mediatek_kernel_modules_connectivity_bt_mt66xx" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/bt/mt76xx/sdio" name="android_vendor_mediatek_kernel_modules_connectivity_bt_mt76xx_sdio" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/common" name="android_vendor_mediatek_kernel_modules_connectivity_common" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/connfem" name="android_vendor_mediatek_kernel_modules_connectivity_connfem" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/conninfra" name="android_vendor_mediatek_kernel_modules_connectivity_conninfra" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/fmradio" name="android_vendor_mediatek_kernel_modules_connectivity_fmradio" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/gps" name="android_vendor_mediatek_kernel_modules_connectivity_gps" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/connectivity/wlan/adaptor" name="android_vendor_mediatek_kernel_modules_connectivity_wlan_adaptor" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/gpu" name="android_vendor_mediatek_kernel_modules_gpu" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/met_drv_v3" name="android_vendor_mediatek_kernel_modules_met_drv_v3" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/mtkcam" name="android_vendor_mediatek_kernel_modules_mtkcam" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
-  <project path="vendor/mediatek/kernel_modules/hbt_driver_cus"  name="android_vendor_mediatek_kernel-modules_hbt_driver_cus" remote="moto_devs" revision="refs/tags/MMI-W1VV36H.7-21-5" groups="vendor"/>
+  <project path="vendor/mediatek/kernel_modules" name="android_vendor_mediatek_kernel_modules" remote="moto_devs" revision="android14buildtest" clone-depth="1" groups="vendor"/>
 
   <!-- Motorola kernel modules -->
   <project path="motorola/kernel/modules" name="motorola-kernel-modules" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1"/>
