@@ -104,22 +104,6 @@ if [ -f "${DTS_DIR}/mt6897.dts" ]; then
         /tmp/mt6897.dts.preprocessed 2>/dev/null && echo "    -> mt6897.dtb OK" || echo "    -> Failed"
 fi
 
-# Build cybert overlay DTBOs
-CYBERT_OVERLAYS="mt6897-cybert-dvt-overlay mt6897-cybert-dvt2-overlay mt6897-cybert-evb-overlay \
-    mt6897-cybert-pvt-overlay mt6897-cybert-jp-dvt-overlay mt6897-cybert-jp-dvt2-overlay \
-    mt6897-cybert-jp-evb-overlay mt6897-cybert-jp-pvt-overlay mt6897-cybert-prc-dvt2-overlay \
-    mt6897-cybert-prc-evb-overlay mt6897-cybert-prc-evt3-overlay mt6897-cybert-prc-pvt-overlay"
-
-for overlay in ${CYBERT_OVERLAYS}; do
-    if [ -f "${DTS_DIR}/${overlay}.dts" ]; then
-        echo "  Building ${overlay}.dtbo..."
-        ${CLANG} -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp ${DTC_INCLUDES} \
-            -o /tmp/${overlay}.dts.preprocessed "${DTS_DIR}/${overlay}.dts" 2>/dev/null && \
-        ${DTC} -@ -I dts -O dtb -o "${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/dtbs/${overlay}.dtbo" \
-            /tmp/${overlay}.dts.preprocessed 2>/dev/null && echo "    -> ${overlay}.dtbo OK" || echo "    -> Failed"
-    fi
-done
-
 # Clean up temp files
 rm -f /tmp/*.dts.preprocessed 2>/dev/null
 
@@ -134,7 +118,7 @@ echo "Generating images..."
 DIST_DIR="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
 DTB_DIST_DIR="${DIST_DIR}/dtbs"
 MKBOOTIMG="${KERNEL_ROOT_DIR}/prebuilts/kernel-build-tools/linux_musl-x86/bin/mkbootimg"
-MKDTBOIMG="${KERNEL_ROOT_DIR}/prebuilts/kernel-build-tools/linux_musl-x86/bin/mkdtboimg"
+
 # Find kernel image - use LZ4 compressed kernel (verified stock uses LZ4)
 KERNEL_IMAGE=$(find ${DIST_DIR} -name "Image.lz4" -type f | grep -v "bazel-out" | head -1)
 
@@ -165,41 +149,12 @@ else
     [ ! -f "${MKBOOTIMG}" ] && echo "    Missing: ${MKBOOTIMG}"
 fi
 
-# 2. Generate dtbo.img (Overlays)
-# BOARD_DTBOIMG_PARTITION_SIZE from BoardConfig.mk
-BOARD_DTBOIMG_PARTITION_SIZE=8388608
-
-if [ -f "${MKDTBOIMG}" ]; then
-    echo "  Creating dtbo.img..."
-    # Use alphabetical ordering for consistency
-    # Bootloader matches overlays based on hardware detection, not index order
-    DTBO_FILES=$(find ${DTB_DIST_DIR} -name "*.dtbo" -type f | sort)
-    
-    if [ -n "${DTBO_FILES}" ]; then
-        DTBO_ARGS=""
-        DTBO_ID=0
-        for dtbo in ${DTBO_FILES}; do
-            DTBO_ARGS="${DTBO_ARGS} ${dtbo} --id=${DTBO_ID}"
-            DTBO_ID=$((DTBO_ID + 1))
-        done
-        ${MKDTBOIMG} create "${DIST_DIR}/dtbo.img" ${DTBO_ARGS}
-        # Pad to partition size (matches stock)
-        truncate -s ${BOARD_DTBOIMG_PARTITION_SIZE} "${DIST_DIR}/dtbo.img"
-        echo "    -> dtbo.img created with ${DTBO_ID} overlays, padded to ${BOARD_DTBOIMG_PARTITION_SIZE} bytes"
-    else
-        echo "    No .dtbo files found for dtbo.img"
-    fi
-else
-    echo "  Skipping dtbo.img: mkdtboimg not found"
-fi
-
 # 3. Generate dtb.img (Base DTB + Overlays concatenated, commonly used on MediaTek)
 # Note: Some devices strictly need the base DTB first, then overlays.
 echo "  Creating dtb.img..."
 if [ -f "${DTB_DIST_DIR}/mt6897.dtb" ]; then
     cat "${DTB_DIST_DIR}/mt6897.dtb" > "${DIST_DIR}/dtb.img"
-    # Append overlays if they exist
-    find ${DTB_DIST_DIR} -name "*.dtbo" | sort | xargs cat >> "${DIST_DIR}/dtb.img" 2>/dev/null
+
     echo "    -> dtb.img created at ${DIST_DIR}/dtb.img"
 else
     echo "    Skipping dtb.img: Base DTB mt6897.dtb not found"
