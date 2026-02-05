@@ -73,7 +73,7 @@ mkdir -p ${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/dtbs
 
 # Set up paths
 DTS_DIR="${KERNEL_ROOT_DIR}/${KERNEL_DIR}/arch/${KERNEL_TARGET_ARCH}/boot/dts/mediatek"
-CLANG="${KERNEL_ROOT_DIR}/prebuilts/clang/host/linux-x86/clang-r547379/bin/clang"
+CLANG="${KERNEL_ROOT_DIR}/prebuilts/clang/host/linux-x86/clang-r487747c/bin/clang"
 DTC="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUILD_OUT}/bazel/output_user_root/output_base/execroot/_main/bazel-out/k8-fastbuild/bin/${KERNEL_DIR}/mgk_64_k61.${KERNEL_BUILD_VARIANT}/scripts/dtc/dtc"
 
 # Include paths for DTS preprocessing
@@ -99,9 +99,9 @@ if [ -f "${DTS_DIR}/mt6897.dts" ]; then
     echo "  Building mt6897.dtb..."
     # Using -nostdinc to ensure we use only our explicit include paths in correct order
     ${CLANG} -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp ${DTC_INCLUDES} \
-        -o /tmp/mt6897.dts.preprocessed "${DTS_DIR}/mt6897.dts" 2>/dev/null && \
+        -o /tmp/mt6897.dts.preprocessed "${DTS_DIR}/mt6897.dts" && \
     ${DTC} -@ -I dts -O dtb -o "${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/dtbs/mt6897.dtb" \
-        /tmp/mt6897.dts.preprocessed 2>/dev/null && echo "    -> mt6897.dtb OK" || echo "    -> Failed"
+        /tmp/mt6897.dts.preprocessed && echo "    -> mt6897.dtb OK" || echo "    -> Failed"
 fi
 
 # Clean up temp files
@@ -112,21 +112,24 @@ echo ""
 echo "DTBs built:"
 ls -la ${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/dtbs/*.dtb* 2>/dev/null || echo "  (none)"
 
-# --- Image Generation ---
-echo ""
-echo "Generating images..."
-DIST_DIR="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
-DTB_DIST_DIR="${DIST_DIR}/dtbs"
-
 # --- Module Organization ---
 echo ""
 echo "Organizing modules..."
-# Search in the entire device modules output directory to find both GKI and Vendor modules
-# GKI modules are often in mgk_64_k61* dirs, Vendor in *_modules_install.
-MODULES_SEARCH_PATH="${DIST_DIR}/kernel_device_modules-6.1"
 
-if [ -d "${MODULES_SEARCH_PATH}" ]; then
-    echo "  Searching for modules in: ${MODULES_SEARCH_PATH}"
+DIST_DIR="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
+
+# Search paths
+# System modules (GKI) are in the abi folder
+SYSTEM_MODULES_SEARCH_PATH="${DIST_DIR}/abi"
+# Vendor modules are in the device modules install directory
+VENDOR_MODULES_SEARCH_PATH="${DIST_DIR}/kernel_device_modules-6.1/mgk_64_k61_customer_modules_install.user"
+# Fallback path for vendor modules
+VENDOR_MODULES_FALLBACK_PATH="${DIST_DIR}/kernel_device_modules-6.1/mgk_64_k61.user"
+
+if [ -d "${VENDOR_MODULES_SEARCH_PATH}" ]; then
+    echo "  System modules path: ${SYSTEM_MODULES_SEARCH_PATH}"
+    echo "  Vendor modules path: ${VENDOR_MODULES_SEARCH_PATH}"
+    echo "  Vendor fallback path: ${VENDOR_MODULES_FALLBACK_PATH}"
     
     # Define destination directories
     SYSTEM_MOD_DIR="${DIST_DIR}/system"
@@ -140,6 +143,8 @@ if [ -d "${MODULES_SEARCH_PATH}" ]; then
         local list_file="$1"
         local dest_dir="$2"
         local label="$3"
+        local search_path="$4"
+        local fallback_path="$5"
         
         if [ -f "${list_file}" ]; then
             echo "  Processing ${label} from $(basename ${list_file})..."
@@ -153,12 +158,19 @@ if [ -d "${MODULES_SEARCH_PATH}" ]; then
                 local mod_name=$(basename "$module")
                 # Find the module recursively in the search path
                 # Use head -1 to pick the first match if duplicates exist (usually identical)
-                local src_path=$(find "${MODULES_SEARCH_PATH}" -name "${mod_name}" 2>/dev/null | head -1)
+                local src_path=$(find "${search_path}" -name "${mod_name}" 2>/dev/null | head -1)
                 
+                if [ -z "${src_path}" ] && [ -n "${fallback_path}" ]; then
+                     src_path=$(find "${fallback_path}" -name "${mod_name}" 2>/dev/null | head -1)
+                     if [ -n "${src_path}" ]; then
+                         echo "    Found in fallback: ${mod_name}"
+                     fi
+                fi
+
                 if [ -n "${src_path}" ]; then
                     cp -f "${src_path}" "${dest_dir}/"
                 else
-                    echo "    Warning: Module ${mod_name} not found in build output"
+                    echo "    Warning: Module ${mod_name} not found in ${search_path} (or fallback if provided)"
                 fi
             done < "${list_file}"
             echo "    -> Copied to ${dest_dir}"
@@ -167,29 +179,29 @@ if [ -d "${MODULES_SEARCH_PATH}" ]; then
         fi
     }
 
-    # 1. System Modules
-    copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.system" "${SYSTEM_MOD_DIR}" "System Modules"
+    # 1. System Modules (No fallback)
+    copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.system" "${SYSTEM_MOD_DIR}" "System Modules" "${SYSTEM_MODULES_SEARCH_PATH}"
     
-    # 2. Vendor Modules
+    # 2. Vendor Modules (With fallback)
     # Check for modules.load.vendor OR modules.recovery.vendor as user hinted variability
     if [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor" ]; then
-        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor" "${VENDOR_MOD_DIR}" "Vendor Modules"
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor" "${VENDOR_MOD_DIR}" "Vendor Modules" "${VENDOR_MODULES_SEARCH_PATH}" "${VENDOR_MODULES_FALLBACK_PATH}"
     elif [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.recovery.vendor" ]; then
-        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.recovery.vendor" "${VENDOR_MOD_DIR}" "Vendor Modules"
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.recovery.vendor" "${VENDOR_MOD_DIR}" "Vendor Modules" "${VENDOR_MODULES_SEARCH_PATH}" "${VENDOR_MODULES_FALLBACK_PATH}"
     fi
 
-    # 3. Vendor Ramdisk Modules
+    # 3. Vendor Ramdisk Modules (With fallback)
     if [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor_ramdisk" ]; then
-        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor_ramdisk" "${VENDOR_RAMDISK_MOD_DIR}" "Vendor Ramdisk Modules"
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.vendor_ramdisk" "${VENDOR_RAMDISK_MOD_DIR}" "Vendor Ramdisk Modules" "${VENDOR_MODULES_SEARCH_PATH}" "${VENDOR_MODULES_FALLBACK_PATH}"
     fi
     # Recovery modules generally go to vendor_ramdisk in generic setups, or separate recovery ramdisk.
     # User requested: "recovery goes in vendor_ramdisk"
     if [ -f "${KERNEL_ROOT_DIR}/build/manifest/modules.load.recovery" ]; then
-        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.recovery" "${VENDOR_RAMDISK_MOD_DIR}" "Recovery Modules (to vendor_ramdisk)"
+        copy_modules "${KERNEL_ROOT_DIR}/build/manifest/modules.load.recovery" "${VENDOR_RAMDISK_MOD_DIR}" "Recovery Modules (to vendor_ramdisk)" "${VENDOR_MODULES_SEARCH_PATH}" "${VENDOR_MODULES_FALLBACK_PATH}"
     fi
 
 else
-    echo "Warning: Could not find modules installation directory in dist"
+    echo "Warning: Could not find modules installation directory in dist: ${VENDOR_MODULES_SEARCH_PATH}"
 fi
 
 echo ""
