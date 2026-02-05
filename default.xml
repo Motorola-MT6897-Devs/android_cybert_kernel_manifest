@@ -2,7 +2,6 @@
 <manifest>
   <remote  name="aosp" fetch="https://android-review.googlesource.com/"/>
   <default revision="main-kernel-build-2023" remote="aosp" sync-j="4"/>
-  <remote name="motorola" fetch="https://github.com/MotorolaMobilityLLC/"/>
   <remote name="moto_devs" fetch="https://github.com/Motorola-MT6897-Devs/"/>
 
   <superproject name="kernel/superproject" remote="aosp" revision="common-android14-6.1"/>
@@ -31,20 +30,20 @@
   <project path="external/python/absl-py" name="platform/external/python/absl-py" clone-depth="1" />
 
   <!-- cybert kernel sources -->
-  <project path="kernel-6.1" name="kernel-mtk" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1"/>
+  <project path="kernel-6.1" name="android_kernel_motorola_cybert" revision="lineage-23.0" remote="moto_devs" clone-depth="1"/>
   
-  <project path="kernel_device_modules-6.1" name="android_kernel_motorola_cybert-modules" revision="android14buildtest" remote="moto_devs" clone-depth="1"/>
+  <project path="kernel_device_modules-6.1" name="android_kernel_motorola_cybert-modules" revision="lineage-23.0" remote="moto_devs" clone-depth="1"/>
 
   <!-- MediaTek kernel modules -->
-  <project path="vendor/mediatek/kernel_modules" name="android_vendor_mediatek_kernel_modules" remote="moto_devs" revision="android14buildtest" clone-depth="1" groups="vendor"/>
+  <project path="vendor/mediatek/kernel_modules" name="android_vendor_mediatek_kernel_modules" remote="moto_devs" revision="lineage-23.0" clone-depth="1" groups="vendor"/>
 
   <!-- Motorola kernel modules -->
-  <project path="motorola/kernel/modules" name="motorola-kernel-modules" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1"/>
+  <project path="motorola/kernel/modules" name="android_motorola_kernel_modules" revision="lineage-23.0" remote="moto_devs" clone-depth="1"/>
   
-  <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" revision="refs/tags/MMI-W1VV36H.7-21-5" remote="motorola" clone-depth="1"/>
+  <project path="build/bazel_mgk_rules" name="kernel-build-bazel_mgk_rules" revision="lineage-23.0" remote="moto_devs" clone-depth="1"/>
 
   <!-- Manifest Repo & Build Script -->
-  <project path="build/manifest" name="android_cybert_kernel_manifest" remote="moto_devs" revision="android14buildtest">
+  <project path="build/manifest" name="android_cybert_kernel_manifest" remote="moto_devs" revision="lineage-23.0">
     <linkfile src="build.sh" dest="build.sh"/>
   </project>
 </manifest>
