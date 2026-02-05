@@ -10,6 +10,12 @@ KERNEL_DEFCONFIG_OVERLAYS="mgk_64_k61_defconfig"
 KERNEL_BAZEL_BUILD_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ
 KERNEL_BAZEL_DIST_OUT=out/target/product/${TARGET_PRODUCT}/obj/KLEAF_OBJ/dist
 
+# Clear DIST_DIR to ensure a clean build
+if [ -d "${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}" ]; then
+    echo "Cleaning DIST_DIR: ${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
+    rm -rf "${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT:?}"/*
+fi
+
 # Disable Bzlmod as we are missing mgk_ext.bzl
 if [ -f "MODULE.bazel" ]; then
     echo "Disabling MODULE.bazel (Bzlmod) as mgk_ext is missing..."
@@ -66,6 +72,16 @@ build/kernel/kleaf/bazel.sh --output_root=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUIL
 build/kernel/kleaf/bazel.sh --output_root=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUILD_OUT} --output_base=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUILD_OUT}/bazel/output_user_root/output_base run ${PRIVATE_BAZEL_BUILD_FLAG} --nokmi_symbol_list_violations_check ${PRIVATE_BAZEL_DIST_GOAL} -- --dist_dir=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}
 
 build/kernel/kleaf/bazel.sh --output_root=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUILD_OUT} --output_base=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_BUILD_OUT}/bazel/output_user_root/output_base run ${PRIVATE_BAZEL_BUILD_FLAG} //${LINUX_KERNEL_VERSION}:kernel_aarch64_abi_dist -- --dist_dir=${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/abi
+
+# Copy Image.gz to DIST_DIR
+# The kernel image is located deep in the dist directory structure by the Bazel build rules
+IMAGE_GZ_SRC="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/${KERNEL_DIR}/mgk_64_k61_kernel_aarch64.user/Image.gz"
+if [ -f "${IMAGE_GZ_SRC}" ]; then
+    echo "Copying Image.gz to dist root..."
+    cp "${IMAGE_GZ_SRC}" "${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}/"
+else
+    echo "Warning: Image.gz not found at ${IMAGE_GZ_SRC}"
+fi
 
 # Build DTBs for cybert (mt6897) from device modules sources
 echo "Building DTBs for ${TARGET_PRODUCT}..."
