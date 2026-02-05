@@ -118,17 +118,6 @@ echo "Generating images..."
 DIST_DIR="${KERNEL_ROOT_DIR}/${KERNEL_BAZEL_DIST_OUT}"
 DTB_DIST_DIR="${DIST_DIR}/dtbs"
 
-# 3. Generate dtb.img (Base DTB + Overlays concatenated, commonly used on MediaTek)
-# Note: Some devices strictly need the base DTB first, then overlays.
-echo "  Creating dtb.img..."
-if [ -f "${DTB_DIST_DIR}/mt6897.dtb" ]; then
-    cat "${DTB_DIST_DIR}/mt6897.dtb" > "${DIST_DIR}/dtb.img"
-
-    echo "    -> dtb.img created at ${DIST_DIR}/dtb.img"
-else
-    echo "    Skipping dtb.img: Base DTB mt6897.dtb not found"
-fi
-
 # --- Module Organization ---
 echo ""
 echo "Organizing modules..."
